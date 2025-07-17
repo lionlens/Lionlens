@@ -368,9 +368,17 @@ font-variation-settings: "wdth" 100;
 .product-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: center; /* ✅ Center all product cards */
   gap: 20px;
   padding: 20px;
+}
+
+/* Make cards 100% width on small screens */
+@media (max-width: 768px) {
+  .product-card {
+    width: 90%;
+    margin: 0 auto; /* ✅ Center each card horizontally */
+  }
 }
 
 .product-card {
