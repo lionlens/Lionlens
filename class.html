@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Editing & Web Dev – Free Support Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root { --primary:#ff9900; --text:#222; --muted:#666; --border:#e6e6e6; }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Arial,Helvetica,sans-serif; color:var(--text);
+      background:#fff;
+    }
+    .wrap{
+      max-width:560px; margin:24px auto; padding:20px;
+    }
+    .card{
+      background:#fff; border:1px solid var(--border); border-radius:12px;
+      box-shadow:0 4px 12px rgba(0,0,0,.06); padding:20px;
+    }
+    h1{font-size:22px; margin:0 0 4px}
+    p.lead{color:var(--muted); margin:0 0 16px; font-size:14px}
+    .grid{display:grid; gap:12px; grid-template-columns:1fr 1fr}
+    .grid-1{grid-template-columns:1fr}
+    label{font-size:13px; color:var(--muted); display:block; margin:6px 0}
+    input,select,textarea{
+      width:100%; padding:12px; border:1px solid var(--border); border-radius:10px;
+      font-size:15px; background:#fff; outline:none;
+    }
+    textarea{min-height:110px; resize:vertical}
+    .row{display:flex; gap:12px}
+    .row > *{flex:1}
+    .hint{font-size:12px; color:var(--muted); margin-top:6px}
+    .btn{
+      width:100%; padding:14px; border:none; border-radius:10px; cursor:pointer;
+      font-weight:700; font-size:16px; color:#fff; background:var(--primary);
+      transition:filter .2s ease;
+    }
+    .btn:hover{filter:brightness(.92)}
+    .secured{margin-top:10px; text-align:center; color:var(--muted); font-size:13px}
+    @media (max-width:560px){
+      .grid{grid-template-columns:1fr}
+      .wrap{padding:12px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Editing & Web Developer — Free Support Form</h1>
+      <p class="lead">Fill this form for video/photo editing or website help. We’ll call you shortly.</p>
+
+      <form id="supportForm">
+        <div class="grid">
+          <div>
+            <label for="name">Full Name</label>
+            <input id="name" type="text" placeholder="Enter your name" required />
+          </div>
+          <div>
+            <label for="number">Mobile Number</label>
+            <input id="number" type="tel" inputmode="numeric" placeholder="10-digit number" required />
+          </div>
+        </div>
+
+        <div class="grid">
+          <div>
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="you@example.com" />
+          </div>
+          <div>
+            <label for="language">Language</label>
+            <input id="language" type="text" placeholder="English / Hindi / Kannada..." />
+          </div>
+        </div>
+
+        <div class="grid">
+          <div>
+            <label for="age">Age</label>
+            <input id="age" type="number" min="1" placeholder="Your age" />
+          </div>
+          <div>
+            <label for="gender">Gender</label>
+            <select id="gender">
+              <option value="">Select</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Prefer not to say</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div>
+            <label for="state">State</label>
+            <input id="state" type="text" placeholder="Your state" />
+          </div>
+          <div>
+            <label for="city">City</label>
+            <input id="city" type="text" placeholder="Your city" />
+          </div>
+        </div>
+
+        <div class="grid">
+          <div>
+            <label for="pincode">Pincode</label>
+            <input id="pincode" type="text" inputmode="numeric" placeholder="Pincode" />
+          </div>
+          <div>
+            <label for="service">Service Needed</label>
+            <select id="service" required>
+              <option value="">Select service</option>
+              <option>Video Editing</option>
+              <option>Photo Editing</option>
+              <option>Website Development</option>
+              <option>UI Design</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+           
+          <div>
+            <label for="deadline">date of birth</label>
+            <input id="deadline" type="date" />
+          </div>
+        </div>
+
+
+
+        <button class="btn" type="submit">Send Request</button>
+        <div class="secured">🔒 Your info is 100% secure</div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // 🔧 Telegram Bot configuration — replace these:
+    const BOT_TOKEN = "7332056218:AAHBeOYPKvLTvAieuOuDX_KtvP2b5nS364M";
+    const CHAT_ID  = "6981597316";
+
+    const form = document.getElementById("supportForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      // Simple validation for phone
+      const phone = document.getElementById("number").value.trim();
+      if (phone.length < 10) {
+        alert("Please enter a valid 10-digit mobile number.");
+        return;
+      }
+
+      // Collect values
+      const name     = document.getElementById("name").value.trim();
+      const email    = document.getElementById("email").value.trim();
+      const language = document.getElementById("language").value.trim();
+      const age      = document.getElementById("age").value.trim();
+      const gender   = document.getElementById("gender").value;
+      const state    = document.getElementById("state").value.trim();
+      const city     = document.getElementById("city").value.trim();
+      const pincode  = document.getElementById("pincode").value.trim();
+      const service  = document.getElementById("service").value;
+      const details  = document.getElementById("details").value.trim();
+      const budget   = document.getElementById("budget").value.trim();
+      const deadline = document.getElementById("deadline").value;
+      const filelink = document.getElementById("filelink").value.trim();
+
+      // Compose message
+      const when = new Date().toLocaleString();
+      const msg =
+`📩 *New Support Request*  
+🕒 ${when}
+
+👤 Name: ${name}
+📞 Mobile: ${phone}
+📧 Email: ${email || "-"}
+🗣 Language: ${language || "-"}
+
+🎯 Service: ${service}
+📝 Details: ${details || "-"}
+
+🌍 State: ${state || "-"}
+🏙 City: ${city || "-"}
+📮 Pincode: ${pincode || "-"}
+
+💰 Budget: ₹${budget || "-"}
+📅 Deadline: ${deadline || "-"}
+🔗 File Link: ${filelink || "-"}`.replace(/&/g,"&amp;");
+
+      // Send to Telegram
+      try {
+        const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: msg,
+            parse_mode: "Markdown"
+          })
+        });
+        const data = await res.json();
+
+        if (data.ok) {
+          // Optional: clear form then redirect
+          form.reset();
+          // Redirect to your confirmation page
+          window.location.href = "order-confirmed.html";
+        } else {
+          alert("Failed to send. Please check bot token/chat id.");
+          console.error(data);
+        }
+      } catch (err) {
+        alert("Network error while sending to Telegram.");
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>

