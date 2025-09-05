@@ -102,7 +102,7 @@ document.querySelector(".subscribe").addEventListener("click", function () {
   document.body.appendChild(card);
 
   // Play sound
-  const audio = new Audio("/videoplayback (3).mp3");
+  const audio = new Audio("videoplayback (3).mp3");
   audio.play();
 
   // Confetti 🎉
