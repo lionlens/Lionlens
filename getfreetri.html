@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Desktop CSS -->
+  <link rel="stylesheet" href="desktop.css" media="screen and (min-width: 769px)">
+  
+  <!-- Mobile CSS -->
+  <link rel="stylesheet" href="mobile.css" media="screen and (max-width: 768px)">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>lion lens</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Story+Script&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Story+Script&family=Vend+Sans:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/c07f13b96d.js" crossorigin="anonymous"></script>
+  <title></title>
+</head>
+
+<body>
+  
+      <div class="navbar">
+      <div class="head">
+        <div class="navlogo">
+          <div class="logo">
+          </div>
+        </div>
+        </div>
+        </div>
+  </div>
+  <div class="freetrialregistar">
+    <h2 class="freetrialregistar0">Free Trial</h2>
+    <input type="text" id="freetrialregistar1" class="freetrialregistar1" placeholder="Enter Your Name" />
+    <input type="number" id="freetrialregistar2" class="freetrialregistar2" placeholder="Enter Your Phone Number">
+    <button type="submit" id="freetrialregistar3" class="freetrialregistar3">Submit</button>
+  </div>
+  
+
+    <p class="free1">© 2025 Designed by lion lens</p>
+<script>
+  document.getElementById("freetrialregistar3").addEventListener("click", function() {
+  const name = document.getElementById("freetrialregistar1").value.trim();
+  const phone = document.getElementById("freetrialregistar2").value.trim();
+  
+  if (name === "" || phone === "") {
+    alert("Please fill in all fields!");
+    return;
+  }
+  
+  // 🔹 Replace with your bot details
+  const botToken = "7332056218:AAHBeOYPKvLTvAieuOuDX_KtvP2b5nS364M";
+  const chatId = "6981597316";
+  
+  const message = `📩 New Free Trial Request\n\n👤 Name: ${name}\n📱 Phone: ${phone}`;
+  
+  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.ok) {
+    
+        window.location.href = "bookvideo.html"; // 👉 Redirect after sending
+      } else {
+        alert("❌ Try again!");
+        console.error(data);
+      }
+    })
+    .catch(error => {
+      alert("⚠️ Error Please contact lionlens");
+      console.error(error);
+    });
+});
+</script>
+</body>
+
+</html>

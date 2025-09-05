@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Auto Swipe Slider</title>
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #2b5876, #4e4376);
+      font-family: "Poppins", sans-serif;
+    }
+
+    .swiper {
+      width: 320px;
+      height: 450px;
+    }
+
+    .swiper-slide {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      transition: transform 0.4s;
+    }
+
+    .swiper-slide img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 15px;
+      margin-bottom: 15px;
+    }
+
+    .swiper-slide h3 {
+      margin: 0;
+      font-size: 20px;
+      color: #333;
+    }
+
+    .swiper-slide p {
+      font-size: 14px;
+      text-align: center;
+      color: #555;
+    }
+
+    .swiper-pagination-bullet {
+      background: white;
+      opacity: 0.8;
+    }
+
+    .swiper-pagination-bullet-active {
+      background: #ff9800;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Swiper Container -->
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <img src="https://picsum.photos/300/220?random=1" alt="">
+        <h3>Card One</h3>
+        <p>Premium design with auto swipe feature.</p>
+      </div>
+      <div class="swiper-slide">
+        <img src="https://picsum.photos/300/220?random=2" alt="">
+        <h3>Card Two</h3>
+        <p>Swipe by hand or wait for auto slide.</p>
+      </div>
+      <div class="swiper-slide">
+        <img src="https://picsum.photos/300/220?random=3" alt="">
+        <h3>Card Three</h3>
+        <p>Perfect Instagram-style slider in HTML.</p>
+      </div>
+    </div>
+    <!-- Pagination -->
+    <div class="swiper-pagination"></div
+  </div>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    var swiper = new Swiper(".mySwiper", {
+      loop: true,
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      effect: "slide",
+      grabCursor: true,
+    });
+  </script>
+
+</body>
+</html>

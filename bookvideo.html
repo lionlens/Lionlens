@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Desktop CSS -->
+  <link rel="stylesheet" href="desktop.css" media="screen and (min-width: 769px)">
+  
+  <!-- Mobile CSS -->
+  <link rel="stylesheet" href="mobile.css" media="screen and (max-width: 768px)">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>lion lens</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Story+Script&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Story+Script&family=Vend+Sans:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/c07f13b96d.js" crossorigin="anonymous"></script>
+  
+  <body>
+    
+    <div class="switch">
+  <h2 class="switch1">WARNING</h2>
+  <p class="switch2"> Website is not designed for desktop site Please Switch off desktop Site to open Website</p>
+</div>
+    <div class="navbar">
+      <div class="head">
+        <div class="navlogo">
+        <div class="logo">
+      </div>
+    </div>
+    </div>
+    </div>
+    
+<div class="form">
+  <h2>Fill this detail for continue</h2>
+  <div class="form1">
+    <input type="text" id="name" placeholder="Enter Your Name" class="form2">
+    <input type="number" id="phone" placeholder="Enter Your mobile number" class="form3">
+    <input type="text" id="gender" placeholder="Gender" class="form4">
+  </div>
+  
+  <div class="payment">
+    <h2 class="pay1">Select Payment Method</h2>
+    
+    <div class="payment-option">
+      <input type="radio" name="payment" id="upi">
+      <label for="upi">UPI / QR Code</label>
+    </div>
+    
+    <div class="payment-option">
+      <input type="radio" name="payment" id="card">
+      <label for="card">Debit / Credit Card</label>
+    </div>
+    
+    <div class="payment-option">
+      <input type="radio" name="payment" id="netbanking">
+      <label for="netbanking">Net Banking</label>
+    </div>
+    
+    <div class="payment-option">
+      <input type="radio" name="payment" id="cod">
+      <label for="cod">Cash on Delivery</label>
+    </div>
+  </div>
+</div>
+
+<div class="adds">
+  <h2>Address</h2>
+  <div class="adds1">
+    <input type="text" id="state" class="adds2" placeholder="State*" />
+    <input type="text" id="city" class="adds3" placeholder="City*" />
+    <input type="text" id="language" class="adds4" placeholder="Language*" />
+    <input type="text" id="pincode" class="adds5" placeholder="Pincode" />
+  </div>
+</div>
+
+<div class="done">
+  <div class="done1">
+    <button type="submit" class="con" id="bookBtn">Book</button>
+  </div>
+</div>
+</div>
+    
+  </body>
+<script>
+  document.getElementById("bookBtn").addEventListener("click", function() {
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const gender = document.getElementById("gender").value.trim();
+  const state = document.getElementById("state").value.trim();
+  const city = document.getElementById("city").value.trim();
+  const language = document.getElementById("language").value.trim();
+  const pincode = document.getElementById("pincode").value.trim();
+  
+  // get selected payment
+  let payment = "";
+  const payments = document.getElementsByName("payment");
+  for (let i = 0; i < payments.length; i++) {
+    if (payments[i].checked) {
+      payment = payments[i].id;
+      break;
+    }
+  }
+  
+  if (name === "" || phone === "" || gender === "" || state === "" || city === "" || pincode === "" || payment === "") {
+    alert("⚠️ Please fill in all fields and select payment method!");
+    return;
+  }
+  
+  // 🔹 Replace with your bot details
+  const botToken = "7332056218:AAHBeOYPKvLTvAieuOuDX_KtvP2b5nS364M";
+  const chatId = "6981597316";
+  
+  const message = `📩 New Booking Request\n\n👤 Name: ${name}\n📱 Phone: ${phone}\n⚧ Gender: ${gender}\n🏠 Address: ${city}, ${state}, ${pincode}\n🌐 Language: ${language}\n💳 Payment: ${payment}`;
+  
+  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.ok) {
+        window.location.href = "greentick.html"; // redirect
+      } else {
+        alert("❌ please try agine!");
+        console.error(data);
+      }
+    })
+    .catch(error => {
+      alert("⚠️ Error please try to connect @lionlens.in!");
+      console.error(error);
+    });
+});
+</script>
+</html>
