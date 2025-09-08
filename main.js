@@ -82,6 +82,12 @@ document.querySelector(".subscribe").addEventListener("click", function () {
     return;
   }
 
+if (email=== "editor") {
+    window.location.href = "https://lionlens.github.io/Devi-sadhna/";
+    return;
+  }
+
+
   // Send message to Telegram
   const message = `🔔 New Subscriber!\n👤 Name: ${name}\n📧 Contact: ${email}`;
   fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
