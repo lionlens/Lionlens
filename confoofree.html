@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmed</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    overflow:hidden;
+}
+
+/* Floating circles */
+.circle{
+    position:absolute;
+    border-radius:50%;
+    background:rgba(255,255,255,0.08);
+    animation:float 10s infinite linear;
+}
+
+.circle:nth-child(1){
+    width:100px;
+    height:100px;
+    top:10%;
+    left:15%;
+}
+
+.circle:nth-child(2){
+    width:150px;
+    height:150px;
+    bottom:15%;
+    right:10%;
+}
+
+.circle:nth-child(3){
+    width:70px;
+    height:70px;
+    top:70%;
+    left:5%;
+}
+
+@keyframes float{
+    0%{transform:translateY(0px);}
+    50%{transform:translateY(-30px);}
+    100%{transform:translateY(0px);}
+}
+
+.card{
+    width:90%;
+    max-width:450px;
+    text-align:center;
+    padding:40px;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:25px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.4);
+    animation:fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* Tick Circle */
+.checkmark-circle{
+    width:130px;
+    height:130px;
+    margin:auto;
+    border-radius:50%;
+    background:#00d26a;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    box-shadow:0 0 40px rgba(0,210,106,0.7);
+    animation:pop 0.6s ease forwards;
+}
+
+@keyframes pop{
+    0%{
+        transform:scale(0);
+    }
+    100%{
+        transform:scale(1);
+    }
+}
+
+.checkmark{
+    width:35px;
+    height:70px;
+    border-right:8px solid white;
+    border-bottom:8px solid white;
+    transform:rotate(45deg) scale(0);
+    animation:tick 0.5s 0.5s forwards;
+}
+
+@keyframes tick{
+    to{
+        transform:rotate(45deg) scale(1);
+    }
+}
+
+h1{
+    color:white;
+    margin-top:25px;
+    font-size:32px;
+}
+
+p{
+    color:#ddd;
+    margin-top:10px;
+    font-size:17px;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:25px;
+    padding:12px 28px;
+    background:#00d26a;
+    color:white;
+    text-decoration:none;
+    border-radius:50px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 20px rgba(0,210,106,0.8);
+}
+</style>
+</head>
+<body>
+
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+
+<div class="card">
+
+    <div class="checkmark-circle">
+        <div class="checkmark"></div>
+    </div>
+
+    <h1>Congratulations ! </h1>
+
+    <p>
+        ORDER CONFIRMED<br>
+      WE WILL CONTACT YOU SHORTLY FOR FURTHER DETAILS
+    </p>
+
+    <a href="index.html" class="btn">
+        Continue Shopping
+    </a>
+
+</div>
+
+</body>
+</html>

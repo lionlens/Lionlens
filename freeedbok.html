@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>User Registration System</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    overflow:hidden;
+}
+
+/* Main Form Card */
+.container{
+    width:90%;
+    max-width:450px;
+    padding:35px;
+    border-radius:25px;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,0.2);
+    box-shadow:0 15px 40px rgba(0,0,0,0.4);
+    animation:fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.container h2{
+    color:#fff;
+    text-align:center;
+    margin-bottom:25px;
+    font-size:28px;
+}
+
+/* Inputs */
+input,
+select{
+    width:100%;
+    padding:14px;
+    margin-bottom:15px;
+    border:none;
+    outline:none;
+    border-radius:12px;
+    background:rgba(255,255,255,0.15);
+    color:white;
+    font-size:16px;
+    border:1px solid rgba(255,255,255,0.2);
+}
+
+input::placeholder{
+    color:#ddd;
+}
+
+select option{
+    color:black;
+}
+
+/* Button */
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#00d26a;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 20px rgba(0,210,106,0.7);
+}
+
+/* Status Text */
+#status{
+    text-align:center;
+    margin-top:15px;
+    color:white;
+    font-weight:bold;
+}
+
+/* Full Screen Loading */
+#loadingScreen{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(15,32,39,0.96);
+    backdrop-filter:blur(10px);
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+#loadingScreen h2{
+    color:white;
+    margin-top:25px;
+    font-weight:500;
+    letter-spacing:1px;
+}
+
+/* Animated Dots */
+.loader{
+    display:flex;
+    gap:12px;
+}
+
+.loader span{
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:#00d26a;
+    box-shadow:0 0 20px #00d26a;
+    animation:bounce 1s infinite;
+}
+
+.loader span:nth-child(2){
+    animation-delay:0.2s;
+}
+
+.loader span:nth-child(3){
+    animation-delay:0.4s;
+}
+
+@keyframes bounce{
+    0%,100%{
+        transform:translateY(0);
+        opacity:0.5;
+    }
+    50%{
+        transform:translateY(-15px);
+        opacity:1;
+    }
+}
+</style>
+</head>
+
+<body>
+<div id="loadingScreen">
+    <div class="loader">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <h2>Loading please wait</h2>
+</div>
+<div class="container">
+
+<h2>User Information Form</h2>
+
+<input type="text" id="name" placeholder="Enter Name">
+
+<input type="text" id="number" placeholder="Mobile Number">
+
+<input type="number" id="age" placeholder="Age">
+
+<select id="gender">
+    <option value="">Select Gender</option>
+    <option>Male</option>
+    <option>Female</option>
+    <option>Other</option>
+</select>
+
+
+<button onclick="saveData()">Submit</button>
+
+
+<div id="status"></div>
+
+</div>
+
+<script>
+
+let dotCount = 0;
+
+setInterval(() => {
+    if(document.getElementById("loading").style.display === "block"){
+        dotCount = (dotCount + 1) % 4;
+        document.getElementById("dots").innerHTML = ".".repeat(dotCount);
+    }
+}, 500);
+
+function saveData(){
+
+    document.getElementById("loadingScreen").style.display = "flex";
+
+
+let data = {
+    name: document.getElementById("name").value,
+    number: document.getElementById("number").value,
+    age: document.getElementById("age").value,
+    gender: document.getElementById("gender").value,
+    datetime: new Date().toLocaleString()
+};
+
+fetch("https://script.google.com/macros/s/AKfycbwCanXsX-K_lu6aFaynvtDBQlaWN25KTcINqNB5cRq_EUnLRFYF8Q2Pmfgs3lfXZqOo/exec",{
+    method:"POST",
+    body:JSON.stringify(data)
+})
+.then(response => response.text())
+.then(result => {
+
+   setTimeout(() => {
+    window.location.href = "done.html";
+}, 5);
+
+})
+.catch(error => {
+    document.getElementById("loading").innerHTML =
+    "❌ Error Saving Data";
+});
+
+}
+
+
+
+</script>
+
+</body>
+</html>
