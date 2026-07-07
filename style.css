@@ -1,0 +1,25 @@
+ body{
+    background-color: #000000;
+ }
+ .heading {
+    text-align: center;
+    color: #ffffff;
+    margin-top: 100px;
+ }
+
+ .heading h2 {
+   font-size: 60px;
+    font-family: "Caveat", cursive;
+  font-optical-sizing: auto;
+  font-weight: <20px>;
+  font-style: normal;
+ }
+ .heading p {
+  color: #55d6e7;
+   font-size: 30px;
+     font-family: "Dancing Script", cursive;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+  margin-top: -59px;
+}

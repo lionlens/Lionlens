@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Form</title>
+    <style>
+        :root {
+            --bg: #0b0c0a;
+    --bg-alt: #131410;
+    --panel: #1b1c16;
+            --card: #1b1c1620;
+            --text: #23487c;
+            --muted: rgb(255, 227, 227);
+            --primary: #3161c9;
+            --primary-dark: #1d4ed8;
+            --accent: #d6eaf7;
+            --border: #d1d5db;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+           background:var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    line-height:1.6;
+    overflow-x:hidden;
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 16px;
+        }
+
+        .booking-card {
+            width: 100%;
+            max-width: 720px;
+            background: var(--card);
+            box-shadow: 0 24px 80px rgba(15, 23, 42, 0.12);
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        .booking-header {
+             background:var(--bg-alt);
+            padding: 32px 28px;
+        }
+
+        .booking-header h1 {
+            color: var(--primary);
+            margin: 0;
+            font-size: 2rem;
+            line-height: 1.1;
+             font-family:var(--display);
+    font-size:clamp(1.rem,11vw, 8.5rem);
+    line-height:0.92;
+    letter-spacing:.01em;
+    text-transform:uppercase;
+    color:var(--text);
+        }
+
+        .booking-header p {
+            margin: 12px 0 0;
+            color: rgba(173, 148, 3, 0.88);
+            font-size: 0.98rem;
+        }
+
+        .booking-body {
+            padding: 32px 28px 36px;
+            display: grid;
+            gap: 22px;
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 18px;
+        }
+
+        .form-row {
+            display: grid;
+            gap: 18px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .form-row:nth-child(3) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+             font-family:var(--body);
+        }
+
+        label {
+             font-family:var(--mono); font-size:13px; letter-spacing:.08em;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #fbfbfb;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: #fff0f0;
+            font-size: 0.96rem;
+            color: var(--text);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .inline-note {
+            font-size: 0.88rem;
+            color: var(--muted);
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .button-primary,
+        .button-secondary {
+            border: none;
+            border-radius: 14px;
+            padding: 14px 22px;
+            font-size: 0.98rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .button-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .button-secondary {
+            background: #f3f4f6;
+            color: var(--text);
+        }
+
+        .button-primary:hover,
+        .button-secondary:hover {
+            transform: translateY(-1px);
+        }
+
+        .button-primary:active,
+        .button-secondary:active {
+            transform: translateY(0);
+        }
+
+        .privacy {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-top: -6px;
+        }
+
+        @media (max-width: 680px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-body {
+                padding: 24px 20px 28px;
+            }
+        }
+
+        .submit-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    backdrop-filter:blur(14px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    opacity:0;
+    visibility:hidden;
+    transition:.4s;
+    z-index:99999;
+}
+
+.submit-overlay.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.submit-card{
+    width:330px;
+    padding:40px;
+    border-radius:24px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(25px);
+    border:1px solid rgba(255,255,255,.15);
+    text-align:center;
+    color:#fff;
+    box-shadow:0 25px 60px rgba(0,0,0,.4);
+    animation:popup .4s ease;
+}
+
+@keyframes popup{
+from{
+opacity:0;
+transform:translateY(25px) scale(.9);
+}
+to{
+opacity:1;
+transform:translateY(0) scale(1);
+}
+}
+
+/* ================= Overlay ================= */
+
+.booking-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(10,10,10,.45);
+    backdrop-filter:blur(18px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    opacity:0;
+    visibility:hidden;
+    transition:.4s;
+    z-index:99999;
+}
+
+.booking-overlay.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.booking-popup{
+
+    width:350px;
+    max-width:90%;
+
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.12);
+
+    backdrop-filter:blur(30px);
+
+    border-radius:24px;
+
+    padding:40px;
+
+    text-align:center;
+
+    box-shadow:
+    0 30px 80px rgba(0,0,0,.4);
+
+    animation:popup .45s ease;
+}
+
+@keyframes popup{
+
+from{
+transform:scale(.8);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+/* Loader */
+
+.loader{
+
+width:65px;
+height:65px;
+
+border:5px solid rgba(255,255,255,.15);
+border-top:5px solid #4f8cff;
+
+border-radius:50%;
+
+margin:auto;
+
+animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+
+100%{
+transform:rotate(360deg);
+}
+
+}
+
+.booking-popup h2{
+
+margin:25px 0 10px;
+font-size:26px;
+color:white;
+
+}
+
+.booking-popup p{
+
+color:#d6d6d6;
+
+}
+
+/* Success */
+
+.hidden{
+
+display:none;
+
+}
+
+.success-check{
+
+width:100px;
+margin:auto;
+
+}
+
+.success-check svg{
+
+width:100%;
+
+}
+
+.circle{
+
+fill:none;
+stroke:#35d07f;
+stroke-width:6;
+
+stroke-dasharray:300;
+stroke-dashoffset:300;
+
+animation:circle .8s forwards;
+
+}
+
+.check{
+
+fill:none;
+stroke:#35d07f;
+
+stroke-width:8;
+
+stroke-linecap:round;
+stroke-linejoin:round;
+
+stroke-dasharray:100;
+stroke-dashoffset:100;
+
+animation:check .5s .6s forwards;
+
+}
+
+@keyframes circle{
+
+to{
+
+stroke-dashoffset:0;
+
+}
+
+}
+
+@keyframes check{
+
+to{
+
+stroke-dashoffset:0;
+
+}
+
+}
+    </style>
+</head>
+<body>
+<!-- Loading Overlay -->
+<div id="bookingOverlay" class="booking-overlay">
+    <div class="booking-popup">
+
+        <!-- Loading -->
+        <div id="loadingState">
+            <div class="loader"></div>
+            <h2>Submitting Booking</h2>
+            <p>Please wait while we save your booking...</p>
+        </div>
+
+        <!-- Success -->
+        <div id="successState" class="hidden">
+            <div class="success-check">
+                <svg viewBox="0 0 100 100">
+                    <circle class="circle" cx="50" cy="50" r="45"/>
+                    <path class="check" d="M30 52 L45 67 L72 38"/>
+                </svg>
+            </div>
+
+            <h2>Booking Submitted!</h2>
+            <p>We'll contact you shortly.</p>
+        </div>
+
+    </div>
+</div>
+    <main class="page-wrapper">
+        <section class="booking-card">
+            <header class="booking-header">
+                <h1>Booking Form</h1>
+                <p>Book your appointment in minutes. Provide the details below and our team will confirm your request.</p>
+            </header>
+            <form class="booking-body" action="#" method="post" id="bookingForm">
+                <div class="form-grid">
+                    <div class="form-row">
+                        <div class="field-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" placeholder="Jane Doe" required>
+                        </div>
+                        <div class="field-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="jane@example.com" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="field-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="(123) 456-7890" required>
+                        </div>
+                        <div class="field-group">
+                            <label for="service">Service Type</label>
+                            <select id="service" name="service" required>
+                                <option value="">Select a service</option>
+                                <option>Reel Edit</option>
+                                <option>Event Edit</option>
+                                <option>Photo Edit</option>
+                                <option>Custom Edit</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="field-group">
+                            <label for="date">Preferred Date</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+                      
+                    </div>
+                    <div class="field-group">
+                        <label for="guests">Number of video or photoo</label>
+                        <input type="number" id="guests" name="guests" min="1" max="20" placeholder="1" required>
+                    </div>
+                    <div class="field-group">
+                        <label for="message">Additional Details</label>
+                        <textarea id="message" name="message" placeholder="Tell us about your requirements or any questions." rows="5"></textarea>
+                        <span class="inline-note">Optional. You can include any preferences or project details here.</span>
+                    </div>
+                </div>
+                <div class="button-row">
+                    <button type="reset" class="button-secondary">Reset</button>
+                    <button type="submit" class="button-primary">Submit Booking</button>
+                </div>
+                <p class="privacy">By submitting this form, you agree to our terms and allow us to contact you regarding your booking.</p>
+            </form>
+        </section>
+    </main>
+
+
+   <script>
+
+const scriptURL = "https://script.google.com/macros/s/AKfycbz5s_rF4ohE2SslmAZ0-VamqwPmCBZdjZDAyBgxuALYxljjo_Ah6pi92luJv1kjQ62Y/exec";
+
+document.getElementById("bookingForm").addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    const data = {
+        fullName: document.getElementById("fullName").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        service: document.getElementById("service").value,
+        date: document.getElementById("date").value,
+        guests: document.getElementById("guests").value,
+        message: document.getElementById("message").value
+    };
+
+    fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        alert("Booking Submitted Successfully!");
+        document.getElementById("bookingForm").reset();
+    })
+    .catch(error => {
+        alert("Submission Failed!");
+        console.error(error);
+    });
+
+});
+
+const overlay = document.getElementById("bookingOverlay");
+const loading = document.getElementById("loadingState");
+const success = document.getElementById("successState");
+
+document.getElementById("bookingForm").addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+    overlay.classList.add("show");
+
+    loading.classList.remove("hidden");
+    success.classList.add("hidden");
+
+    const data = {
+        fullName: fullName.value,
+        email: email.value,
+        phone: phone.value,
+        service: service.value,
+        date: date.value,
+        guests: guests.value,
+        message: message.value
+    };
+
+    fetch(scriptURL,{
+        method:"POST",
+        headers:{
+            "Content-Type":"text/plain"
+        },
+        body:JSON.stringify(data)
+    })
+
+   .then(() => {
+
+    loading.classList.add("hidden");
+    success.classList.remove("hidden");
+
+    document.getElementById("bookingForm").reset();
+
+    setTimeout(() => {
+        overlay.classList.remove("show");
+    }, 2000);
+
+})
+
+    .catch(()=>{
+
+        overlay.classList.remove("show");
+
+        alert("Submission Failed");
+
+    });
+
+});
+</script>
+</body>
+</html>
